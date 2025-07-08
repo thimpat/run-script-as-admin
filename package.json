@@ -3,6 +3,7 @@
   "displayName": "run-script-as-admin",
   "description": "Run PowerShell scripts with elevated (admin) privileges directly from VS Code.",
   "version": "0.0.1",
+  "publisher": "thimpat",
   "engines": {
     "vscode": "^1.101.0"
   },
@@ -13,8 +14,8 @@
   "main": "./extension.js",
   "contributes": {
     "commands": [{
-      "command": "run-script-as-admin.helloWorld",
-      "title": "Hello World"
+      "command": "run-script-as-admin.runScript",
+      "title": "Run Powershell Script as Admin"
     }]
   },
   "scripts": {

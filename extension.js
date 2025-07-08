@@ -10,25 +10,39 @@ const vscode = require('vscode');
  */
 function activate(context) {
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "run-script-as-admin" is now active!');
+	const cp = require('child_process');
+	const path = require('path');
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with  registerCommand
-	// The commandId parameter must match the command field in package.json
-	const disposable = vscode.commands.registerCommand('run-script-as-admin.helloWorld', function () {
-		// The code you place here will be executed every time your command is executed
+	let disposable = vscode.commands.registerCommand('run-script-as-admin.runScript', async function () {
+		const uri = await vscode.window.showOpenDialog({
+			canSelectMany: false,
+			filters: { 'PowerShell Scripts': ['ps1'] },
+			openLabel: 'Run as Admin'
+		});
 
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from run-script-as-admin!');
+		if (!uri || uri.length === 0) {
+			vscode.window.showWarningMessage('No script selected.');
+			return;
+		}
+
+		const scriptPath = uri[0].fsPath;
+
+		// Use Start-Process with -Verb RunAs to elevate
+		const command = `Start-Process powershell -ArgumentList '-ExecutionPolicy Bypass -File "${scriptPath}"' -Verb RunAs`;
+
+		cp.exec(`powershell -Command "${command}"`, (error, stdout, stderr) => {
+			if (error) {
+				vscode.window.showErrorMessage(`Failed to run script: ${error.message}`);
+			} else {
+				vscode.window.showInformationMessage(`Script launched as admin: ${path.basename(scriptPath)}`);
+			}
+		});
 	});
 
-	context.subscriptions.push(disposable);
 }
 
 // This method is called when your extension is deactivated
-function deactivate() {}
+function deactivate() { }
 
 module.exports = {
 	activate,
