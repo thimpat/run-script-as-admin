@@ -2,7 +2,7 @@
   "name": "run-script-as-admin",
   "displayName": "Run Script as Admin",
   "description": "Run PowerShell, BAT, or CMD scripts as Administrator from the VS Code context menu.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "thimpat",
   "license": "MIT",
   "repository": {
