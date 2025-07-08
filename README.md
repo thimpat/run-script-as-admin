@@ -17,8 +17,10 @@ This Visual Studio Code extension allows you to run PowerShell scripts with elev
 
 ## Requirements
 
-- Windows with PowerShell installed
-- VS Code 1.50+ (recommended)
+- Windows OS
+- [PowerShell 7+](https://github.com/PowerShell/PowerShell) installed and available as `pwsh` in your system PATH
+- VS Code 1.50 or later
+
 
 ## Author
 
