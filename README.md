@@ -25,3 +25,8 @@ This Visual Studio Code extension allows you to run PowerShell scripts with elev
 ## Author
 
 Created by [thimpat](https://github.com/thimpat)
+
+
+
+
+[![VS Code Marketplace](https://img.shields.io/visual-studio-marketplace/v/thimpat.run-script-as-admin?label=Install%20from%20Marketplace)](https://marketplace.visualstudio.com/items?itemName=thimpat.run-script-as-admin)

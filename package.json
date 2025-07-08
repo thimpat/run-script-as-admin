@@ -1,7 +1,7 @@
 {
   "name": "run-script-as-admin",
-  "displayName": "run-script-as-admin",
-  "description": "Run PowerShell scripts with elevated privileges from VS Code. Requires PowerShell 7+ for full Unicode and emoji support.",
+  "displayName": "Run Script as Admin",
+  "description": "Run PowerShell, BAT, or CMD scripts as Administrator from the VS Code context menu.",
   "version": "0.0.1",
   "publisher": "thimpat",
   "license": "MIT",
