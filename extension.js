@@ -13,22 +13,25 @@ function activate(context) {
 	const cp = require('child_process');
 	const path = require('path');
 
-	let disposable = vscode.commands.registerCommand('run-script-as-admin.runScript', async function () {
-		const uri = await vscode.window.showOpenDialog({
-			canSelectMany: false,
-			filters: { 'PowerShell Scripts': ['ps1'] },
-			openLabel: 'Run as Admin'
-		});
-
-		if (!uri || uri.length === 0) {
+	let disposable = vscode.commands.registerCommand('run-script-as-admin.runScript', function (uri) {
+		if (!uri || !uri.fsPath) {
 			vscode.window.showWarningMessage('No script selected.');
 			return;
 		}
 
-		const scriptPath = uri[0].fsPath;
+		const scriptPath = uri.fsPath;
+		const ext = path.extname(scriptPath).toLowerCase();
 
-		// Use Start-Process with -Verb RunAs to elevate
-		const command = `Start-Process powershell -ArgumentList '-ExecutionPolicy Bypass -File "${scriptPath}"' -Verb RunAs`;
+		let command;
+
+		if (ext === '.ps1') {
+			command = `Start-Process pwsh -ArgumentList '-ExecutionPolicy Bypass -File "${scriptPath}"' -Verb RunAs`;
+		} else if (ext === '.bat' || ext === '.cmd') {
+			command = `Start-Process cmd -ArgumentList '/c "${scriptPath}"' -Verb RunAs`;
+		} else {
+			vscode.window.showErrorMessage(`Unsupported file type: ${ext}`);
+			return;
+		}
 
 		cp.exec(`powershell -Command "${command}"`, (error, stdout, stderr) => {
 			if (error) {
